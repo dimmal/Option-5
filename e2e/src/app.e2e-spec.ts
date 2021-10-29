@@ -1,14 +1,33 @@
+import { browser, by, element, protractor } from 'protractor';
 import { AppPage } from './app.po';
 
 describe('workspace-project App', () => {
-  let page: AppPage;
+  let app: AppPage;
+  let EC = protractor.ExpectedConditions;
 
   beforeEach(() => {
-    page = new AppPage();
+    app = new AppPage();
   });
 
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to option5!');
+  it('Should have one module available', () => {
+    app.navigateToHomePage();
+    
+    
+    app.waitForComponent('o5-home').then(() => {
+      var modules = app.getAllByClass('module-wrapper');
+  
+      expect(modules.count()).toEqual(1);
+    });
+  });
+
+  it('Should navigate to the dnd dashboard', () => {
+    app.waitForComponent('o5-home').then(() => {
+      var modules = app.getAllByClass('module-wrapper');
+      modules.first().click();
+      
+      app.waitForComponent('o5-dnd-dashboard').then(() => {
+        expect(element(by.tagName('o5-dnd-dashboard')).isPresent());
+      });
+    });
   });
 });

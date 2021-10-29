@@ -1,11 +1,18 @@
-import { browser, by, element } from 'protractor';
+import { browser, by, element, ElementArrayFinder, protractor } from 'protractor';
 
 export class AppPage {
-  navigateTo() {
-    return browser.get('/');
+  expectedConditions = protractor.ExpectedConditions;
+  
+  navigateToHomePage() {
+    return browser.get('http://localhost:4200/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  waitForComponent(componentSelector: string) {
+    return browser.wait(this.expectedConditions.presenceOf(element(by.tagName(componentSelector))), 10000);
   }
+
+  getAllByClass(className: string): ElementArrayFinder {
+    return element.all(by.className(className));
+  }
+
 }

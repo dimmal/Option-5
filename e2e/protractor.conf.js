@@ -19,7 +19,8 @@ exports.config = {
     defaultTimeoutInterval: 30000,
     print: function() {}
   },
-  onPrepare() {
+  async onPrepare() {
+    await browser.waitForAngularEnabled(false);
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.e2e.json')
     });
