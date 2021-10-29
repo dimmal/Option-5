@@ -1,15 +1,15 @@
 version: 2.1
 
 jobs:
-  say-hello:
+  end-to-end:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
       - run:
-          name: "Say hello"
+          name: "Run tests"
           command: "echo Hello, World!"
 workflows:
-  say-hello-workflow:
+  end-to-end-workflow:
     jobs:
-      - say-hello
+      - end-to-end
