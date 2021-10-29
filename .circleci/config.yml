@@ -23,7 +23,7 @@ jobs:
       - checkout
       - run:
           name: "End-to-End tests"
-          command: "ng e2e"
+          command: "npm run e2e"
 
 workflows:
   end-to-end:
