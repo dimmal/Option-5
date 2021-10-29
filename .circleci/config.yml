@@ -16,12 +16,6 @@ jobs:
           name: chrome install
           command: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
       - run:
-          name: chrome update
-          command: apt-get update
-      - run:
-          name: chrome prepare
-          command: apt install --yes ./google-chrome-stable_current_amd64.deb
-      - run:
           name: execute e2e
           command: npm run e2e
 workflows:
