@@ -1,23 +1,18 @@
 version: 2.1
 
+orbs:
+  browser-tools: circleci/browser-tools@x.y
 jobs:
   end-to-end:
     docker:
       - image: 'circleci/node:latest'
     steps:
       - checkout
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - run:
           name: npm install
           command: npm ci
-      - run:
-          name:  install chromedriver
-          command: npm install chromedriver
-      - run:
-          name: install webdriver
-          command: npm install selenium -webdriver
-      - run:
-          name: chrome install
-          command: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
       - run:
           name: execute e2e
           command: npm run e2e
