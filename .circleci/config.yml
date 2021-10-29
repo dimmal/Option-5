@@ -1,7 +1,6 @@
 version: 2.1
 
 orbs:
-  common: okode/common@2.0.7
   node: circleci/node@4
 
 jobs:
