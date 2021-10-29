@@ -1,0 +1,20 @@
+<div class="page-wrapper">
+	<div class="conditions">
+		<div *ngFor="let condition of conditions" [id]="condition.code" class="condition-wrapper">
+			<div class="title">{{condition.title | translate}}</div>
+
+			<div *ngFor="let description of condition.description" class="description" [innerHtml]="description | translate"></div>
+
+			<ng-container *ngIf="condition.rules?.length > 0">
+				<ul>
+					<li *ngFor="let rule of condition.rules">{{rule | translate}}</li>
+				</ul>
+			</ng-container>
+		</div>
+	</div>
+	<div class="condition-link-wrapper">
+		<div *ngFor="let condition of conditions" class="condition-link" (click)="scrollToCondition(condition.code)">
+			{{condition.title | translate}}
+		</div>
+	</div>
+</div>

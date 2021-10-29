@@ -17,7 +17,7 @@ export class SplashScreenGuard implements CanActivate {
 		  this.navigation.navigate('app/splash', null, true);
 		  this.app.showSplashScreen = false;
 	  }
-console.log('can activate route', !this.app.showSplashScreen);
-	  return !this.app.showSplashScreen; 
+
+    return !this.app.showSplashScreen; 
   }
 }
