@@ -37,6 +37,7 @@
 		font-size: 14px;
 		line-height: 16px;
 		margin: 0 auto;
+		text-align: center;
 	}
 	.icon {
 		height: 30px;
@@ -46,4 +47,12 @@
 }
 .module-wrapper.dnd {
 	background: $module-dnd-background;
+}
+
+
+@media only screen and (max-width: 1023px) {
+	.module-wrapper {
+		width: 100% !important;		
+		box-sizing: border-box;
+	}
 }

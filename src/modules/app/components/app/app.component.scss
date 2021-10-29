@@ -27,8 +27,6 @@ mat-sidenav-content {
 	display: flex;
     flex-direction: column;
 	height: 100%;
-    font-size: 24px;
-    line-height: 26px;
 
 	.app-header-wrapper {
 		position: relative;
@@ -41,15 +39,63 @@ mat-sidenav-content {
 		color:  mat-contrast($primary-palette, 500);
 		box-shadow: 0px 0px 9px 0px rgba(0,0,0,.6);
 
-		.menu-icon {
-			top: 10px;
-			right: 10px;
-			cursor: pointer;
-			margin: auto 0;
+		.page-title-wrapper {
+			display: flex;
+			gap: 15px;
+			
+			mat-icon {
+				margin: auto 0;
+			}
+
+			.page-title {
+				font-size: 24px;
+				line-height: 26px;
+				white-space: nowrap;
+			}
+		}
+
+		.logo-wrapper {
+			display: flex;
+
+			.logo {
+				height: 31px;
+				display: block;
+				margin: auto;
+			}
+		}
+	
+		.menu-icon-wrapper {
+			display: flex;
+			justify-content: end;
+			
+			.menu-icon {
+				top: 10px;
+				right: 10px;
+				cursor: pointer;
+				margin: auto 0;
+				justify-self: end;
+			}
+		}
+		
+		> * {
+			width: 33%;
 		}
 	}
 
 	.app-content-wrapper {
 		flex-grow: 1;
+	}
+}
+
+@media only screen and (max-width: 1023px) {
+	.logo-wrapper {
+		display: none !important;
+	}
+}
+@media only screen and (min-width: 1024px) {
+	.page-title {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: inline;
 	}
 }

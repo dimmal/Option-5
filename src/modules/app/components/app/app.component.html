@@ -11,11 +11,20 @@
 
     <mat-sidenav-content>
       <div class="app-header-wrapper">
-        <div class="page-title" [@fadeInOut]="app.currentPageTitle">
+        <div class="page-title-wrapper" [@fadeInOut]="app.currentPageTitle">
           <mat-icon *ngIf="!app.isAtRootPath" (click)="goBack()">west</mat-icon>
-          {{app.currentPageTitle | translate}}
+          <div class="page-title">{{app.currentPageTitle | translate}}</div>
         </div>
-        <mat-icon class="menu-icon" (click)="openSidebar()">menu</mat-icon>
+        <div class="logo-wrapper">          
+          <img *ngIf="!app.isAtRootPath"
+               [@fadeInOut]="app.currentPageTitle"
+               class="logo"
+               src="/assets/images/app/app-logo.png"
+               (click)="goToRoot()" />
+        </div>
+        <div class="menu-icon-wrapper">
+          <mat-icon class="menu-icon" (click)="openSidebar()">menu</mat-icon>
+        </div>
       </div>
 
       <div class="h-100 w-100 app-content-wrapper" [@routerTransitions]="outletAnimation" (@routerTransitions.done)="animationDone()">
