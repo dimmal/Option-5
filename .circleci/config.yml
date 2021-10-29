@@ -11,7 +11,7 @@ jobs:
           command: npm ci
       - run:
           name: chromdriver install
-          command: npm install chromedriver
+          command: npm install -g chromedriver
       - run:
           name: execute e2e
           command: npm run e2e
