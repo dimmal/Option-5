@@ -11,6 +11,6 @@ jobs:
           command: "npm run e2e"
 
 workflows:
-  say-hello-workflow:
+  end-to-end:
     jobs:
       - e2e
