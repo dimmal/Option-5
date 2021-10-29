@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: "Run tests"
-          command: "echo v2"
+          command: "npm run e2e"
 workflows:
   end-to-end-workflow:
     jobs:
