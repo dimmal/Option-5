@@ -9,8 +9,6 @@ import { MaterialModule } from '../material/material.module';
 import { RootComponent } from './components/root/root.component';
 import { SplashComponent } from './components/splash/splash.component';
 import { HomeComponent } from './components/home/home.component';
-import { TranslatePipe } from './pipes/translation.pipe';
-import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './components/app/app.component';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { RouteReuseStrategy } from '@angular/router';
@@ -18,25 +16,25 @@ import { environment } from 'src/environments/environment';
 import { HammerModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     IonicModule.forRoot({ animated: false }),
-    MaterialModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    HammerModule
+    HammerModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    
+    SharedModule,
+    MaterialModule
   ],
   declarations: [
     RootComponent,
     AppComponent,
     SplashComponent,
-    HomeComponent,
-
-    TranslatePipe
+    HomeComponent
   ],
   providers: [
     { provide: MatBottomSheetRef, useValue: {} },

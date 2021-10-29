@@ -48,7 +48,7 @@ export class AppComponent extends Unsubscriber {
   }
 
   goBack() {
-    window.history.back();
+    this.navigation.goBack();
   }
 
   goToRoot() {

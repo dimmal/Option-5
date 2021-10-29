@@ -14,8 +14,8 @@ export class DndDashboardComponent {
       this.app.currentPageTitle = 'dnd.dashboard.title';
     }
 
-  proceed() {
-    this.navigation.navigateForward('app/dnd/character-sheet');
+  goToPath(path: string) {
+    this.navigation.navigateForward(path);
   }
 
   back() {

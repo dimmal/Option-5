@@ -10,8 +10,7 @@ describe('workspace-project App', () => {
   });
 
   it('Should have one module available', () => {
-    app.navigateToHomePage();
-    
+    app.navigateToHomePage();    
     
     app.waitForComponent('o5-home').then(() => {
       var modules = app.getAllByClass('module-wrapper');
@@ -21,13 +20,20 @@ describe('workspace-project App', () => {
   });
 
   it('Should navigate to the dnd dashboard', () => {
-    app.waitForComponent('o5-home').then(() => {
-      var modules = app.getAllByClass('module-wrapper');
-      modules.first().click();
-      
-      app.waitForComponent('o5-dnd-dashboard').then(() => {
-        expect(element(by.tagName('o5-dnd-dashboard')).isPresent());
-      });
+    var modules = app.getAllByClass('module-wrapper');
+    modules.first().click();
+    
+    app.waitForComponent('o5-dnd-dashboard').then(() => {
+      expect(element(by.tagName('o5-dnd-dashboard')).isPresent());
+    });
+  });
+
+  it('Should navigate to the dnd conditions page', () => {
+    var modules = app.getAllByClass('dashboard-link');
+    modules.first().click();
+    
+    app.waitForComponent('o5-dnd-conditions').then(() => {
+      expect(element(by.tagName('o5-dnd-conditions')).isPresent());
     });
   });
 });

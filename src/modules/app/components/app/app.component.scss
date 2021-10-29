@@ -84,6 +84,7 @@ mat-sidenav-content {
 
 	.app-content-wrapper {
 		flex-grow: 1;
+		overflow: auto;
 	}
 }
 
