@@ -13,6 +13,8 @@ import { NavigationDataService } from './navigation-data.service';
 })
 export class NavigationService {
 	private history = new Array<NavItem>();
+	public currentPageTitle: boolean;
+	private rootPath = 'app/home';
 
 	constructor(private router: Router,
 		private device: DeviceService,
@@ -107,6 +109,8 @@ export class NavigationService {
 				filter(event => event instanceof NavigationEnd),
 				map((event) => {
 					const routeData = this.navigationData.readData();
+					
+					this.app.isAtRootPath = location.hash.indexOf(this.rootPath) > 0 || location.hash === '#/';
 					// popstate also means forward. Need to 
 					return forcedAnimation ? forcedAnimation : routeData.animation;
 				})

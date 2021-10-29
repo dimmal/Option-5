@@ -46,4 +46,8 @@ export class AppComponent extends Unsubscriber {
         this.outletAnimation = animation;
       });
   }
+
+  goBack() {
+    window.history.back();
+  }
 }

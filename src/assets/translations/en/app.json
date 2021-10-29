@@ -1,4 +1,6 @@
 {
 	"app.home-page": "Home!",
-	"app.home.title": "Welcome to Option 5"
+	"app.home.title": "",
+	"app.home.welcome": "Welcome to",
+	"app.home.modules.title": "Available modules:"
 }

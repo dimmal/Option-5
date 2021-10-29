@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Module } from 'src/models/module';
 import { AppService } from '../../services/app.service';
 import { NavigationService } from '../../services/navigation.service';
 
@@ -8,21 +9,24 @@ import { NavigationService } from '../../services/navigation.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+  availableModules: Array<Module> = modules;
 
   constructor(private navigation: NavigationService,
     private app: AppService) {
     this.app.currentPageTitle = 'app.home.title';
   }
 
-  proceed() {
-    this.navigation.navigateForward('app/home2');
-  }
-
-  proceed2() {
-    this.navigation.navigateForward('app/dnd');
-  }
-
-  back() {
-    this.navigation.goBack();
+  goToModule(path: string) {
+    this.navigation.navigateForward(path);
   }
 }
+
+
+const modules: Array<Module> = [
+  {
+    icon: '/assets/images/modules/dnd.png',
+    title: 'Dungeons & Dragons',
+    path: 'app/dnd/dashboard',
+    class: 'dnd'
+  }
+]
