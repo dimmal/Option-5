@@ -24,4 +24,3 @@ jobs:
       - run:
           name: Running e2e tests
           command: npm run e2e
-          name: Building
