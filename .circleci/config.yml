@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: "End-to-End tests"
-          command: "npm run e2e"
+          command: "ng e2e"
 
 workflows:
   end-to-end:
