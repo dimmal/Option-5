@@ -1,7 +1,5 @@
 version: 2
-
-    jobs:
-        # The test job
+jobs:        # The test job
         test:
             # working_directory: ~/project-name
             docker:
