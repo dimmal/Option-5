@@ -3,12 +3,15 @@ version: 2.1
 jobs:
   end-to-end:
     docker:
-      - image: cimg/base:stable
+      - image: 'circleci/node:latest'
     steps:
       - checkout
       - run:
-          name: "Run tests"
-          command: "npm run e2e"
+          name: install
+          command: npm ci
+      - run:
+          name: execute e2e
+          command: npm run e2e
 workflows:
   end-to-end-workflow:
     jobs:
