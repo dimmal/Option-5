@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
+import { isNullOrUndefined } from 'src/helpers/static/is-null-or-undefined';
 
 @Injectable({
 	providedIn: 'root'
@@ -34,7 +35,7 @@ export class LocalizationService {
 	translate(key: string): string {
 		const value = this.translations[key];
 
-		return value ? value : key;
+		return !isNullOrUndefined(value) ? value : key;
 	}
 
 }

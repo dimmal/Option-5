@@ -1,0 +1,18 @@
+@import '~@angular/material/theming';
+
+$db-typography: mat-typography-config(
+  $font-family:   'Roboto',
+  $display-1:     mat-typography-level(50px, 0.64, 400),
+  $display-2:     mat-typography-level(40px, 0.80, 400),
+  $display-3:     mat-typography-level(35px, 0.91, 400),
+  $display-4:     mat-typography-level(27px, 1.19, 400),
+  $headline:      mat-typography-level(24px, 1.00, 500),
+  $title:         mat-typography-level(18px, 1.56, 500),
+  $subheading-1:  mat-typography-level(18px, 1.33, 500),
+  $subheading-2:  mat-typography-level(16px, 2.00, 600),
+  $body-2:        mat-typography-level(14px, 1.71, 500),
+  $body-1:        mat-typography-level(16px, 1.50, 400),
+  $caption:       mat-typography-level(12px, 1.33, 400),
+  $button:        mat-typography-level(14px, 1.14, 500),
+  $input:         mat-typography-level(16px, 1.40, 400)
+);

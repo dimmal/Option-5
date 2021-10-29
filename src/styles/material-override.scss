@@ -1,6 +1,11 @@
 .mat-drawer-content {
     overflow: hidden !important;
 }
+
+.mat-drawer-container {
+    background-color: transparent !important;
+}
+
 .mat-drawer-backdrop.mat-drawer-shown {
     background-color: rgba(0,0,0,.6);
 }

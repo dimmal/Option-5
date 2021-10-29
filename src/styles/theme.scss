@@ -1,0 +1,24 @@
+
+@use '~@angular/material' as mat;
+@import '~@angular/material/theming';
+@import './palettes.scss';
+
+@include mat-core($db-typography);
+
+$primary-palette: mat.$blue-grey-palette;
+$accent-palette: mat.$teal-palette;
+$primary-background-gradient: linear-gradient(90deg,  map-get($primary-palette, 900) 0%, map-get($primary-palette, 700) 100%);
+
+$o5-primary: mat.define-palette($primary-palette, 500);
+$o5-accent: mat.define-palette($accent-palette, 500);
+
+$o5-theme: mat.define-light-theme((
+ color: (
+   primary: $o5-primary,
+   accent: $o5-accent,
+ )
+));
+ 
+@include mat.all-component-themes($o5-theme);
+
+$module-dnd-background: url(/assets/images/app/app-bg.png);

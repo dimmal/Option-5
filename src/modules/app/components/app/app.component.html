@@ -5,13 +5,16 @@
                 position="end"
                 [(opened)]="sidebarOpened">
       <div class="sidebar-wrapper">
-
+        <!-- Sidebar -->
       </div>
     </mat-sidenav>
 
     <mat-sidenav-content>
       <div class="app-header-wrapper">
-        <div class="page-title" [@fadeInOut]="app.currentPageTitle">{{app.currentPageTitle | translate}}</div>
+        <div class="page-title" [@fadeInOut]="app.currentPageTitle">
+          <mat-icon *ngIf="!app.isAtRootPath" (click)="goBack()">west</mat-icon>
+          {{app.currentPageTitle | translate}}
+        </div>
         <mat-icon class="menu-icon" (click)="openSidebar()">menu</mat-icon>
       </div>
 

@@ -1,5 +1,7 @@
+@import '/src/styles/theme.scss';
+
 .app-background {
-	background: url('/assets/images/app/app-bg.png');
+	background: map-get($primary-palette, 700);
 }
 
 .sidebar-wrapper {
@@ -8,14 +10,23 @@
 }
 
 mat-sidenav {
-	box-shadow: 0px 0px 9px 0px rgba(0,0,0,.6);
+	box-shadow: 0 0 9px 5px rgb(0 0 0 / 60%);
+	background: map-get($primary-palette, 50) !important;
+}
+
+.page-title {
+	display: flex;
+    gap: 15px;
+    font-size: 24px;
+    line-height: 24px;
+	cursor: pointer;	
+    margin: auto 0;
 }
 
 mat-sidenav-content {
 	display: flex;
     flex-direction: column;
 	height: 100%;
-	gap: 10px;
     font-size: 24px;
     line-height: 26px;
 
@@ -26,6 +37,9 @@ mat-sidenav-content {
 		box-sizing: border-box;
 		display: flex;
 		justify-content: space-between;
+		background: $primary-background-gradient;
+		color:  mat-contrast($primary-palette, 500);
+		box-shadow: 0px 0px 9px 0px rgba(0,0,0,.6);
 
 		.menu-icon {
 			top: 10px;
@@ -37,6 +51,5 @@ mat-sidenav-content {
 
 	.app-content-wrapper {
 		flex-grow: 1;
-		padding: 18px 16px;
 	}
 }

@@ -1,0 +1,49 @@
+@import '/src/styles/theme.scss';
+
+.logo {
+	display: block;
+    margin: 0 auto;
+    height: 125px;
+}
+.welcome-message {
+	color: mat-contrast($primary-palette, 500);
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    margin: 20px auto -10px auto;
+}
+
+.section-title {
+	font-size: 19px;
+    line-height: 24px;
+	color: mat-contrast($primary-palette, 500);
+}
+.section-title:not(:first-child) {
+	margin-top: 10px;
+}
+.section-title:not(:last-child) {
+	margin-bottom: 10px;
+}
+
+.module-wrapper {
+	padding: 20px 40px;
+	border-radius: 8px;
+	color: mat-contrast($primary-palette, 50);
+	cursor: pointer;
+	display: inline-block;
+	box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+
+	.title {
+		font-size: 14px;
+		line-height: 16px;
+		margin: 0 auto;
+	}
+	.icon {
+		height: 30px;
+		margin: 0px auto 5px auto;
+		display: block;
+	}
+}
+.module-wrapper.dnd {
+	background: $module-dnd-background;
+}

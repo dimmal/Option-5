@@ -30,8 +30,9 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "src/material-override.scss"
+              "src/styles/styles.scss",
+              "src/styles/material-override.scss",
+              "src/styles/theme.scss"
             ],
             "scripts": []
           },
@@ -87,7 +88,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.scss"
+              "src/styles/styles.scss",
+              "src/styles/material-override.scss",
+              "src/styles/theme.scss"
             ],
             "scripts": [],
             "assets": [

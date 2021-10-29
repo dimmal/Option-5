@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class AppService {
 	showSplashScreen = true;
+	isAtRootPath: boolean;
 	private _currentPageTitle: string;
 
 	get currentPageTitle(): string {
