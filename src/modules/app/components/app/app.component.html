@@ -1,0 +1,23 @@
+<div class="h-100 w-100 app-background">
+  <mat-sidenav-container class="example-container w-100 h-100">
+    <mat-sidenav class="h-100"
+                mode="over"
+                position="end"
+                [(opened)]="sidebarOpened">
+      <div class="sidebar-wrapper">
+
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="app-header-wrapper">
+        <div class="page-title" [@fadeInOut]="app.currentPageTitle">{{app.currentPageTitle | translate}}</div>
+        <mat-icon class="menu-icon" (click)="openSidebar()">menu</mat-icon>
+      </div>
+
+      <div class="h-100 w-100 app-content-wrapper" [@routerTransitions]="outletAnimation" (@routerTransitions.done)="animationDone()">
+        <router-outlet #routerOutlet="outlet"></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

@@ -1,0 +1,43 @@
+:host {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.wrapper {
+	background: linear-gradient(90deg,  rgb(58, 66, 74) 0%, rgb(77, 84, 91) 100%);
+	height: 100%;
+	width: 100%;
+	position: relative;
+
+	img {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 400px;
+		transform: translate(-50%, -50%);
+	}
+
+img:first-child { 
+	animation-name: heartFadeInOut; 
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: 1;
+	animation-duration: 1.5s;
+	animation-direction: alternate;
+  }
+}
+
+@keyframes heartFadeInOut {
+	0%
+	{
+		opacity: 0;
+		width: 300px;
+	}
+	100%
+	{
+		opacity: 1;
+		width: 400px;
+	}
+}

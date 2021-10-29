@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+	height: 100%;
+    width: 100%;
+    position: fixed;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: Calibri !important;
+
+	background: linear-gradient(90deg,  rgb(58, 66, 74) 0%, rgb(77, 84, 91) 100%);
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
