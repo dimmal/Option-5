@@ -1,16 +1,22 @@
 version: 2.1
 
+orbs:
+  browser-tools: circleci/browser-tools@1.2.3
 jobs:
-  e2e:
+  end-to-end:
     docker:
-      - image: cimg/base:stable
+      - image: 'circleci/node:latest'
     steps:
       - checkout
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - run:
-          name: "End-to-End tests"
-          command: "ng e2e"
-
+          name: npm install
+          command: npm ci
+      - run:
+          name: execute e2e
+          command: npm run e2e
 workflows:
-  end-to-end:
+  end-to-end-workflow:
     jobs:
-      - e2e
+      - end-to-end
