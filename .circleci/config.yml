@@ -1,41 +1,27 @@
-version: 2
+version: 2.1
 
-    jobs:
-        # The test job
-        test:
-            # working_directory: ~/project-name
-            docker:
-                - image: circleci/node:10-browsers
-            steps:
-                # Checkout the code from the branch into the working_directory
-                - checkout
-                # Log the current branch
-                - run:
-                    name: Show current branch
-                    command: echo ${CIRCLE_BRANCH}
-                # Restore local dependencies from cache
-                - restore_cache:
-                    keys:
-                    - v1-dependencies-{{ checksum "package-lock.json" }}
-                    - v1-dependencies-
-                # Install project dependencies
-                - run:
-                    name: Install local dependencies
-                    command: npm install
-                # Cache local dependencies if they don't exist
-                - save_cache:
-                    key: v1-dependencies-{{ checksum "package-lock.json" }}
-                    paths:
-                        - node_modules
-                # Lint the source code
-                - run:
-                    name: Linting
-                    command: npm run lint
-                # Test the source code
-                - run:
-                    name: Testing
-                    command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-                # End to End test
-                - run:
-                    name: End to End Test
-                    command: npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
+orbs:
+  common: okode/common@2.0.7
+  node: circleci/node@4
+
+jobs:
+  test:
+    parameters:
+      project:
+        type: string
+      skip-tests:
+        type: boolean
+        default: false
+      skip-e2e:
+        type: boolean
+        default: false
+    executor:
+      name: common/node
+      feature: '-browsers'
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          name: Running e2e tests
+          command: npm run e2e
+          name: Building
