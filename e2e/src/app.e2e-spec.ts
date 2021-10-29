@@ -30,4 +30,15 @@ describe('workspace-project App', () => {
       });
     });
   });
+
+  it('Should navigate to the dnd conditions page', () => {
+    app.waitForComponent('o5-home').then(() => {
+      var modules = app.getAllByClass('dashboard-link');
+      modules.first().click();
+      
+      app.waitForComponent('o5-dnd-conditions').then(() => {
+        expect(element(by.tagName('o5-dnd-conditions')).isPresent());
+      });
+    });
+  });
 });
