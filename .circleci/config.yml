@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: "Run tests"
-          command: "echo Hello, World!"
+          command: "echo v2"
 workflows:
   end-to-end-workflow:
     jobs:
