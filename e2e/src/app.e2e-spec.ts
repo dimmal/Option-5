@@ -16,7 +16,7 @@ describe('workspace-project App', () => {
     app.waitForComponent('o5-home').then(() => {
       var modules = app.getAllByClass('module-wrapper');
   
-      expect(modules.count()).toEqual(2);
+      expect(modules.count()).toEqual(1);
     });
   });
 
