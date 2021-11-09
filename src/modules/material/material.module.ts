@@ -59,6 +59,7 @@ import { MatSliderModule } from '@angular/material/slider';
     MatNativeDateModule,
     MatPaginatorModule,
     MatProgressBarModule,
+    MatSlideToggleModule ,
     MatProgressSpinnerModule,
     MatRadioModule,
     MatRippleModule,

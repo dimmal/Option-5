@@ -1,0 +1,33 @@
+@import '/src/styles/theme.scss';
+
+.page-wrapper {
+	max-width: 600px;
+	margin: 0 auto;
+	
+	* {
+		color: mat-contrast($primary-palette, A700) !important;
+	}
+	
+	.title {
+		font-size: 21px;
+		line-height: 24px;
+		font-weight: 500;
+		margin-bottom: 15px;
+	}
+
+	.details {
+		font-size: 14px;
+		line-height: 16px;
+		font-weight: 400;
+		margin-bottom: 25px;
+
+		tr td:not(:first-child) {
+			padding-left: 10px;
+		}
+	}
+
+	.description {
+		font-size: 14px;
+		line-height: 16px;
+	}
+}

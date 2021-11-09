@@ -1,12 +1,17 @@
 <div class="h-100 w-100 app-background">
-  <mat-sidenav-container class="example-container w-100 h-100">
+  <mat-sidenav-container class="example-container w-100 h-100" color="primary">
     <mat-sidenav class="h-100"
                 mode="over"
                 position="end"
                 [(opened)]="sidebarOpened">
       <div class="sidebar-wrapper">
-        <!-- Sidebar -->
+
+        <div class="dark-mode-wrapper">
+          <span>Dark mode</span>
+          <mat-checkbox [(ngModel)]="isDarkMode" (change)="darkModeChanged()"></mat-checkbox>
+        </div>
       </div>
+
     </mat-sidenav>
 
     <mat-sidenav-content>

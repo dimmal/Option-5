@@ -1,3 +1,6 @@
+@import '/src/styles/theme.scss';
+@import '~@angular/material/theming';
+
 .mat-drawer-content {
     overflow: hidden !important;
 }
@@ -14,4 +17,8 @@
     background: #4d545b;
     padding: 18px 16px;
     color: white;
+}
+
+.mat-form-field-flex {
+    background-color: map-get($primary-palette, 50) !important;
 }

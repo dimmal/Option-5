@@ -7,11 +7,11 @@
 .sidebar-wrapper {
 	width: 200px;
 	height: 100%;
+    overflow: hidden;
 }
 
 mat-sidenav {
 	box-shadow: 0 0 9px 5px rgb(0 0 0 / 60%);
-	background: map-get($primary-palette, 50) !important;
 }
 
 .page-title {
@@ -45,6 +45,7 @@ mat-sidenav-content {
 			
 			mat-icon {
 				margin: auto 0;
+				cursor: pointer;
 			}
 
 			.page-title {
@@ -99,4 +100,10 @@ mat-sidenav-content {
 		text-overflow: ellipsis;
 		display: inline;
 	}
+}
+
+.dark-mode-wrapper {
+	display: flex;
+	gap: 10px;
+	justify-content: end;
 }

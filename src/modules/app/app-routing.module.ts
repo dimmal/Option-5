@@ -4,6 +4,7 @@ import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
 import { SplashComponent } from './components/splash/splash.component';
 import { SplashScreenGuard } from './services/guards/splash-screen.guard';
+import { DnDResolver } from './services/resolvers/dnd.resolver';
 import { LocalizationResolver } from './services/resolvers/localization.resolver';
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
     children: [
       { path: 'splash', component: SplashComponent },
       { path: 'home', component: HomeComponent, canActivate: [SplashScreenGuard] },
-      { path: 'dnd', loadChildren: () => import('src/modules/dnd/dnd.module').then(m => m.DndModule) },
+      { path: 'dnd', loadChildren: () => import('src/modules/dnd/dnd.module').then(m => m.DndModule), resolve: [DnDResolver] },
+      { path: 'test', loadChildren: () => import('src/modules/accepted-test/accepted-test.module').then(m => m.AcceptedTestModule) },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
