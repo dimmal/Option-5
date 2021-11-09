@@ -10,4 +10,12 @@ export class DeviceService {
 	constructor(private platform: Platform) {
 		this.isApp = this.platform.is('cordova');
 	}
+
+	saveToMemory(key: string, value: any) {
+		localStorage.setItem(`o5-${key}`, value);
+	}
+
+	retrieveFromMemory<T>(key: string): T {
+		return ((localStorage.getItem(`o5-${key}`) as unknown) as T);
+	}
 }

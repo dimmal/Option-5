@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { takeUntil } from 'rxjs/operators';
 import { fadeInOut } from 'src/animations/fade';
 import { routerTransitions } from 'src/animations/page-transitions';
 import { Unsubscriber } from 'src/base-classes/unsubscriber';
 import { AppService } from '../../services/app.service';
+import { DeviceService } from '../../services/device.service';
 import { NavigationService } from '../../services/navigation.service';
 
 @Component({
@@ -18,11 +19,17 @@ export class AppComponent extends Unsubscriber {
   sidebarOpened = false;
   title: string;
 
+  isDarkMode: boolean;
+
   constructor(public platform: Platform,
+    private renderer: Renderer2,
     public app: AppService,
+    private device: DeviceService,
     private navigation: NavigationService) {
     super();
 
+    this.isDarkMode = this.device.retrieveFromMemory('dark-mode') == 'true';
+    this.darkModeChanged();
   }
 
   ngAfterViewInit() {
@@ -53,5 +60,15 @@ export class AppComponent extends Unsubscriber {
 
   goToRoot() {
     this.navigation.navigateBackward('');
+  }
+
+  darkModeChanged() {
+    if(this.isDarkMode) {
+      this.renderer.addClass(document.body, 'dark-mode');
+    } else {
+      this.renderer.removeClass(document.body, 'dark-mode');
+    }
+
+    this.device.saveToMemory('dark-mode', this.isDarkMode);
   }
 }

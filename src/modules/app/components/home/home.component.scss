@@ -25,6 +25,11 @@
 	margin-bottom: 10px;
 }
 
+.modules {
+	display: flex;
+	gap: 10px;
+}
+
 .module-wrapper {
 	padding: 20px 40px;
 	border-radius: 8px;
@@ -47,6 +52,9 @@
 }
 .module-wrapper.dnd {
 	background: $module-dnd-background;
+}
+.module-wrapper.test {
+	background: white;
 }
 
 

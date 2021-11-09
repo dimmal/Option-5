@@ -4,12 +4,14 @@
 
 	<div class="section-title">{{'app.home.modules.title' | translate}}</div>
 
-	<div *ngFor="let module of availableModules"
-		 matRipple
-		 class="module-wrapper"
-		 [ngClass]="module.class"
-		 (click)="goToModule(module.path)">
-		<img class="icon" src="{{module.icon}}" />
-		<div class="title">{{module.title | translate}}</div>
+	<div class="modules">
+		<div *ngFor="let module of availableModules"
+			matRipple
+			class="module-wrapper"
+			[ngClass]="module.class"
+			(click)="goToModule(module.path)">
+			<img class="icon" src="{{module.icon}}" />
+			<div class="title">{{module.title | translate}}</div>
+		</div>
 	</div>
 </div>
