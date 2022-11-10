@@ -16,7 +16,6 @@ const routes: Routes = [
       { path: 'splash', component: SplashComponent },
       { path: 'home', component: HomeComponent, canActivate: [SplashScreenGuard] },
       { path: 'dnd', loadChildren: () => import('src/modules/dnd/dnd.module').then(m => m.DndModule), resolve: [DnDResolver] },
-      { path: 'test', loadChildren: () => import('src/modules/accepted-test/accepted-test.module').then(m => m.AcceptedTestModule) },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },

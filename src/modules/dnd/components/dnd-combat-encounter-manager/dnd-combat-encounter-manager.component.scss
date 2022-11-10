@@ -1,0 +1,26 @@
+@import '/src/styles/theme.scss';
+
+.page-wrapper {
+	background: $module-dnd-background;
+	color: map-get($primary-palette, 800);
+
+}
+
+@media only screen and (max-width: 1023px) {
+	.page-wrapper {
+		display: flex;
+		flex-direction: column-reverse;
+		gap: 30px;
+	}
+
+
+}
+@media only screen and (min-width: 1024px) {
+	.page-wrapper {
+		display: flex;
+		justify-content: space-between;
+		gap: 20px;
+
+
+	}
+}

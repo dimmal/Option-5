@@ -8,18 +8,20 @@ import { SharedModule } from '../shared/shared.module';
 import { DndCharacterSheetComponent } from './components/character-sheet/character-sheet.component';
 import { DndDashboardComponent } from './components/dnd-dashboard/dnd-dashboard.component';
 import { DndConditionsComponent } from './components/dnd-conditions/dnd-conditions.component';
+import { DndCombatEncounterManagerComponent } from './components/dnd-combat-encounter-manager/dnd-combat-encounter-manager.component';
 
 @NgModule({
   imports: [
     DndRoutingModule,
-    
+
     SharedModule,
     MaterialModule
   ],
   declarations: [
     DndDashboardComponent,
     DndCharacterSheetComponent,
-    DndConditionsComponent
+    DndConditionsComponent,
+    DndCombatEncounterManagerComponent
   ]
 })
 export class DndModule { }

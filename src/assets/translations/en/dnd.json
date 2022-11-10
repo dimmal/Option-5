@@ -2,6 +2,7 @@
 	"dnd.dashboard.title": "Dungeons & Dragons",
 	"dnd.dashboard.conditions": "Conditions",
 	"dnd.dashboard.characters": "Characters",
+	"dnd.dashboard.combat-encounter-manager": "Combat encounter manager",
 
 	"dnd.character-sheet.title": "Character sheet",
 
@@ -65,5 +66,5 @@
 	"dnd.conditions.exhaustion.description-4": "An Effect that removes exhaustion reduces its level as specified in the effect’s description, with all exhaustion Effects Ending if a creature’s exhaustion level is reduced below 1.",
 	"dnd.conditions.exhaustion.description-5": "Finishing a Long Rest reduces a creature’s exhaustion level by 1, provided that the creature has also ingested some food and drink.",
 	"dnd.conditions.exhaustion.levels": "<b>Exhaustion Effects:</b> <br /> <b>1</b>: Disadvantage on Ability Checks <br /> <b>2</b>: Speed halved <br /> <b>3</b>: Disadvantage on Attack rolls and Saving Throws <br /> <b>4</b>: Hit point maximum halved <br /> <b>5</b>: Speed reduced to 0 <br /> <b>6</b>: Death"
-	
+
 }
