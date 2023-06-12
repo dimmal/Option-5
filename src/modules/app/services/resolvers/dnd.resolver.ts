@@ -9,6 +9,6 @@ export class DnDResolver implements Resolve<any> {
 
 	resolve(route: ActivatedRouteSnapshot): any {
 
-		return this.dnd.initialize();
+		// return this.dnd.initialize();
 	}
 }

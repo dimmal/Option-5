@@ -1,0 +1,65 @@
+<div class="page-wrapper">
+  <div class="terrain-selector-wrapper mat-elevation-z3">
+    <mat-icon  class="large-icon" (click)="previousRound()">skip_previous</mat-icon>
+    <mat-icon  class="large-icon" (click)="reset()">restart_alt</mat-icon>
+    <div class="terrain" *ngFor="let terrain of terrains" (click)="terrainSelected(terrain)" [ngClass]="{
+      'is-selected': terrain.isSelected,
+      'mat-elevation-z1': terrain.isSelected,
+      'mat-elevation-z3': !terrain.isSelected
+    }">
+      <img [src]="terrain.imgUrl" />
+      <span class="title">{{terrain.name}}</span>
+    </div>
+    <div class="gold-wrapper">
+      <mat-icon (click)="addGold()">add</mat-icon>
+      <div>Gold: {{gold}}</div>
+      <mat-icon (click)="removeGold()">remove</mat-icon>
+    </div>
+    <div class="round-wrapper">
+      <mat-icon  class="large-icon" (click)="nextRound()">hourglass_top</mat-icon>
+      <div class="current-round">{{currentRound}}</div>
+    </div>
+  </div>
+
+  <div class="map-wrapper">
+    <ng-container *ngFor="let y of rows">
+      <ng-container *ngFor="let x of columns">
+        <o5-cartographers-tile [x]="x+1" [y]="y+1"></o5-cartographers-tile>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="score-wrapper">
+    <div class="score-panel">
+      <div class="score"><input [(ngModel)]="totals.season1.quest1" /></div>
+      <div class="score"><input [(ngModel)]="totals.season1.quest2" /></div>
+      <div class="score"><input [(ngModel)]="totals.season1.gold" /></div>
+      <div class="score"><input [(ngModel)]="totals.season1.monsters" /></div>
+      <div class="score total"><input disabled [ngModel]="totals.totals1" /></div>
+    </div>
+    <div class="score-panel">
+      <div class="score"><input [(ngModel)]="totals.season2.quest1" /></div>
+      <div class="score"><input [(ngModel)]="totals.season2.quest2" /></div>
+      <div class="score"><input [(ngModel)]="totals.season2.gold" /></div>
+      <div class="score"><input [(ngModel)]="totals.season2.monsters" /></div>
+      <div class="score total"><input disabled [ngModel]="totals.totals2" /></div>
+    </div>
+    <div class="score-panel">
+      <div class="score"><input [(ngModel)]="totals.season3.quest1" /></div>
+      <div class="score"><input [(ngModel)]="totals.season3.quest2" /></div>
+      <div class="score"><input [(ngModel)]="totals.season3.gold" /></div>
+      <div class="score"><input [(ngModel)]="totals.season3.monsters" /></div>
+      <div class="score total"><input disabled [ngModel]="totals.totals3" /></div>
+    </div>
+    <div class="score-panel">
+      <div class="score"><input [(ngModel)]="totals.season4.quest1" /></div>
+      <div class="score"><input [(ngModel)]="totals.season4.quest2" /></div>
+      <div class="score"><input [(ngModel)]="totals.season4.gold" /></div>
+      <div class="score"><input [(ngModel)]="totals.season4.monsters" /></div>
+      <div class="score total"><input disabled [ngModel]="totals.totals4" /></div>
+    </div>
+    <div class="score-panel">
+      <div class="score total" ><input disabled [ngModel]="totals.total" /></div>
+    </div>
+  </div>
+</div>

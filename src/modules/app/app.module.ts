@@ -26,7 +26,7 @@ import { SharedModule } from '../shared/shared.module';
     HammerModule,
     BrowserModule,
     BrowserAnimationsModule,
-    
+
     SharedModule,
     MaterialModule
   ],

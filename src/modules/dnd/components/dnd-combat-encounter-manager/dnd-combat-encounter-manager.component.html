@@ -1,3 +1,135 @@
 <div class="page-wrapper">
-Μιχάλη δικό σου!!!
+  <div class="actions-wrapper">
+    <button mat-icon-button (click)="addMonster()"><mat-icon>add</mat-icon></button>
+    <button mat-icon-button (click)="toggleLogs()"><mat-icon>list</mat-icon></button>
+    <button mat-icon-button (click)="completeCombat()"><mat-icon>close</mat-icon></button>
+    <button mat-icon-button (click)="restTheParty()"><mat-icon>replay</mat-icon></button>
+  </div>
+  <div class="initiative-wrapper">
+    <div class="initiative mat-elevation-z8" *ngFor="let init of initiativeOrder" [ngClass]="{'is-pc': init.isPC, 'is-dead': init.currentHPs <= 0}">
+
+      <div class="hp-meter mat-elevation-z8" [ngClass]="{'is-blooded': (init.currentHPs / init.maxHPs) <= 0.5, 'is-dead': init.currentHPs <= 0}">
+        <div class="current-hp-meter" [ngStyle]="{'width': (init.currentHPs / init.maxHPs) * 100 + '%'}"></div>
+        <div class="temp-hp-meter" [ngStyle]="{'width': (init.tempHPs / init.maxHPs) * 100 + '%'}"></div>
+      </div>
+
+      <span class="name">{{init.name || init.defaultName}}</span>
+      <div class="image">
+        <ng-container *ngIf="init.isPC">
+          <img [src]="'assets/images/dnd/player-characters/' + init.code + '.png'" />
+        </ng-container>
+        <ng-container *ngIf="!init.isPC">
+          <img [src]="'assets/images/dnd/player-characters/' + (!!init.monsterType? init.monsterType: 'monster') + '.png'" />
+        </ng-container>
+
+        <mat-icon *ngIf="!!init.monsterType" class="icon-view" (click)="showStatblock(init)">visibility</mat-icon>
+      </div>
+      <div class="details">
+        <div><mat-icon class="icon-temp-hps">heart_broken</mat-icon>{{init.tempHPs}}</div>
+        <div><mat-icon class="icon-hps">favorite</mat-icon>{{init.currentHPs}}</div>
+        <div><mat-icon class="icon-max-hps">favorite</mat-icon>{{init.maxHPs}}</div>
+        <div><mat-icon class="icon-perc">hearing</mat-icon>{{init.passivePerception}}</div>
+        <div><mat-icon class="icon-inv">visibility</mat-icon>{{init.passiveInvestigation}}</div>
+      </div>
+      <div class="ac">
+        <ng-container  *ngIf="!!init.ac">
+          <mat-icon>shield</mat-icon>
+          <span class="value">{{init.ac}}</span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="combat-wrapper">
+    <div class="characters-wrapper">
+
+      <ng-container *ngFor="let character of playerCharacters">
+        <ng-container *ngTemplateOutlet="entity; context: { entity: character }"></ng-container>
+      </ng-container>
+    </div>
+
+    <div class="monsters-wrapper">
+      <ng-container *ngFor="let monster of monsters; index as index">
+        <ng-container *ngTemplateOutlet="entity; context: { entity: monster, index: index }"></ng-container>
+      </ng-container>
+    </div>
+
+  </div>
+
+  <div class="logs-wrapper mat-elevation-z8" [ngClass]="{'show-logs': showLogs}">
+    <div class="log" *ngFor="let log of combatLog">
+      <mat-icon>lens_blur</mat-icon>{{log}}
+    </div>
+  </div>
 </div>
+
+<ng-template #entity let-entity="entity" let-index="index">
+  <div class="mat-elevation-z8" [ngClass]="entity.isPC? 'character': 'monster'">
+    <div class="image">
+      <ng-container *ngIf="entity.isPC">
+        <img [src]="'assets/images/dnd/player-characters/' + entity.code + '.png'" />
+      </ng-container>
+      <ng-container *ngIf="!entity.isPC">
+        <img [src]="'assets/images/dnd/player-characters/' + (!!entity.monsterType? entity.monsterType: 'monster') + '.png'" />
+      </ng-container>
+
+      <button *ngIf="!entity.isPC" class="icon-remove" mat-icon-button (click)="removeMonster(index)"><mat-icon>delete</mat-icon></button>
+    </div>
+    <div class="info">
+      <div class="name">
+        <ng-container *ngIf="entity.isPC">{{entity.name}}</ng-container>
+        <ng-container *ngIf="!entity.isPC">
+
+
+          <mat-form-field appearance="outline">
+            <input matInput [(ngModel)]="entity.name" class="input-name" (change)="update()" (focus)="onFocus($event)"/>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-select class="ddl-monster" [(ngModel)]="entity.monsterType" (selectionChange)="monsterSelected($event, entity, index)">
+              <mat-option *ngFor="let monster of humblewoodMonsters" [value]="monster.code">{{monster.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </ng-container>
+      </div>
+      <div class="hp-meter mat-elevation-z8" [ngClass]="{'is-blooded': (entity.currentHPs / entity.maxHPs) <= 0.5, 'is-dead': entity.currentHPs <= 0}">
+        <div class="current-hp-meter" [ngStyle]="{'width': (entity.currentHPs / entity.maxHPs) * 100 + '%'}"></div>
+        <div class="temp-hp-meter" [ngStyle]="{'width': (entity.tempHPs / entity.maxHPs) * 100 + '%'}"></div>
+      </div>
+    </div>
+    <div class="control-panel">
+      <div class="record">
+        <mat-form-field appearance="outline">
+          <input matInput [(ngModel)]="entity.initiative" type="number" (change)="update()" (focus)="onFocus($event)"/>
+          <mat-icon matSuffix class="icon-initiative">flash_on</mat-icon>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline">
+          <input matInput [(ngModel)]="entity.ac" type="number" (change)="update()" (focus)="onFocus($event)" />
+          <mat-icon matSuffix class="icon-ac">shield</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="record">
+        <mat-form-field appearance="outline">
+          <input matInput [value]="entity.currentHPs" (change)="hpChange($event, entity)" (focus)="onFocus($event)"/>
+          <mat-icon matSuffix class="icon-hps">favorite</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <input matInput [value]="entity.maxHPs" type="number" (change)="maxHpChange($event, entity)" (focus)="onFocus($event)" />
+          <mat-icon matSuffix class="icon-max-hps">favorite</mat-icon>
+        </mat-form-field>
+
+      </div>
+      <div class="record">
+        <mat-form-field appearance="outline">
+          <input matInput type="number" [(ngModel)]="entity.tempHPs" (change)="update()" (focus)="onFocus($event)"/>
+          <mat-icon matSuffix class="icon-temp-hp">heart_broken</mat-icon>
+        </mat-form-field>
+
+      </div>
+    </div>
+  </div>
+</ng-template>

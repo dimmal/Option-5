@@ -9,11 +9,11 @@ import { DndCharacterSheetComponent } from './components/character-sheet/charact
 import { DndDashboardComponent } from './components/dnd-dashboard/dnd-dashboard.component';
 import { DndConditionsComponent } from './components/dnd-conditions/dnd-conditions.component';
 import { DndCombatEncounterManagerComponent } from './components/dnd-combat-encounter-manager/dnd-combat-encounter-manager.component';
+import { StatblockImageComponent } from './components/statblock-image/statblock-image.component';
 
 @NgModule({
   imports: [
     DndRoutingModule,
-
     SharedModule,
     MaterialModule
   ],
@@ -21,7 +21,8 @@ import { DndCombatEncounterManagerComponent } from './components/dnd-combat-enco
     DndDashboardComponent,
     DndCharacterSheetComponent,
     DndConditionsComponent,
-    DndCombatEncounterManagerComponent
+    DndCombatEncounterManagerComponent,
+    StatblockImageComponent,
   ]
 })
 export class DndModule { }

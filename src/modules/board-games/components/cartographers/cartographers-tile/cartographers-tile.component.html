@@ -1,0 +1,7 @@
+<div class="cartographers-tile-wrapper" (click)="clicked()">
+
+  <img *ngIf="!isMountain && terrain" [src]="terrain.imgUrl" />
+  <img *ngIf="isMountain" src="assets/images/board-games/cartographers/mountain.png" />
+  <img *ngIf="isRuins && !terrain" class="ruins" src="assets/images/board-games/cartographers/ruins.png" />
+  <img *ngIf="isRuins && terrain" class="ruins negative" src="assets/images/board-games/cartographers/ruins-negative.png" />
+</div>

@@ -42,5 +42,6 @@ export class LocalizationService {
 
 const translationFiles = [
 	'app',
-	'dnd'
+	'dnd',
+  'board-games'
 ]

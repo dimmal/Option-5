@@ -1,0 +1,124 @@
+@import '/src/styles/theme.scss';
+
+.page-wrapper {
+	background: url(/assets/images/board-games/cartographers/board-game-cartographer-bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+	display: flex;
+  flex-direction: column;
+	gap: 15px;
+
+  .terrain-selector-wrapper {
+    margin: 0 auto;
+    padding: 1.5em 4em;
+    background: rgba(256,256,256, 0.7);
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    justify-content: center;
+    display: flex;
+    grid-gap: 1em;
+    gap: 1em;
+    border-radius: 5px;
+    align-items: center;
+
+    .mat-icon {
+      cursor: pointer;
+    }
+
+    .mat-icon.large-icon {
+      font-size: 2em;
+      height: 1em;
+      width: 1em;
+    }
+    .mat-icon:not(.large-icon) {
+      font-size: 1em;
+      height: 1em;
+      width: 1em;
+    }
+
+    .round-wrapper,
+    .gold-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 5px;
+
+    }
+
+    .terrain.is-selected img{
+      opacity: 1 !important;
+    }
+    .terrain {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1em;
+      border-radius: 4px;
+      background: white;
+      padding: 0.5em;
+      border-radius: 4px;
+      background: white;
+      padding: 0.5em;
+
+      img {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        margin: 0 auto;
+        opacity: .3;
+      }
+
+      .title {
+
+      }
+    }
+  }
+
+  .map-wrapper {
+    display: grid;
+    grid-template-columns: repeat(11, 50px);
+    margin: auto;
+  }
+
+  .score-wrapper {
+    display: flex;
+    gap: 3em;
+    margin: 0 auto;
+
+    .score-panel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      .score {
+        background-color: rgba(245, 222, 179, .7);
+        min-height: 4em;
+        width: 4em;
+        box-shadow: inset 1px 1px rgb(255 255 255 / 70%), inset -1px -1px rgb(255 255 255 / 70%);
+
+        input {
+          background: transparent;
+          border: none;
+          height: 100%;
+          width: 100%;
+          font-size: 2em;
+          outline: none;
+          text-align: center;
+          color: rgba(0,0,0,0.4);
+        }
+      }
+      .score.total {
+        grid-row-start: 1;
+        grid-row-end: 3;
+        grid-column-start: 3;
+      }
+
+      .scrore:last-child {
+        span: 2 / 1;
+      }
+    }
+  }
+}

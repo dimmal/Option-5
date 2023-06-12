@@ -28,5 +28,11 @@ const modules: Array<Module> = [
     title: 'Dungeons & Dragons',
     path: 'app/dnd/dashboard',
     class: 'dnd'
+  },
+  {
+    icon: '/assets/images/modules/board-games.png',
+    title: 'Board Games',
+    path: 'app/board-games/dashboard',
+    class: 'board-games'
   }
 ]

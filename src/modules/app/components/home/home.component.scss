@@ -53,6 +53,14 @@
 .module-wrapper.dnd {
 	background: $module-dnd-background;
 }
+.module-wrapper.board-games {
+	background:  $module-board-games-background;
+  background-size: cover !important;
+
+  * {
+    box-shadow: inset 0px 5px 23px 2px rgb(255 255 255), 2px 0px 25px 7px rgb(255 255 255);
+  }
+}
 .module-wrapper.test {
 	background: white;
 }
@@ -60,7 +68,7 @@
 
 @media only screen and (max-width: 1023px) {
 	.module-wrapper {
-		width: 100% !important;		
+		width: 100% !important;
 		box-sizing: border-box;
 	}
 }

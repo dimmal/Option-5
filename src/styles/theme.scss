@@ -20,6 +20,7 @@ $o5-theme: mat.define-light-theme((
 ));
 
 $module-dnd-background: url(/assets/images/app/app-bg.png);
+$module-board-games-background: url(/assets/images/app/board-games-bg.png);
 
 $angular-dark-theme: mat.define-dark-theme(
   (
@@ -34,6 +35,6 @@ body.dark-mode {
   @include mat.all-component-colors($angular-dark-theme);
 }
 
-body:not(.dark-mode) {  
+body:not(.dark-mode) {
   @include mat.all-component-themes($o5-theme);
 }

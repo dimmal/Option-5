@@ -1,0 +1,31 @@
+@import '/src/styles/theme.scss';
+
+.page-wrapper {
+	background: $module-board-games-background;
+	display: flex;
+	gap: 15px;
+
+	.dashboard-link {
+		height: fit-content;
+		width: fit-content;
+		min-width: fit-content;
+		padding: 10px 20px;
+		display: flex;
+		gap: 10px;
+		cursor: pointer;
+		width: fit-content;
+		border-radius: 8px;
+		border: 2px solid map-get($primary-palette, A700);
+		color: map-get($primary-palette, A700);
+		box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    background: white;
+
+		img {
+			height: 80px;
+		}
+
+		.title {
+			margin: auto;
+		}
+	}
+}

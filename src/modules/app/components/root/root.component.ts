@@ -16,7 +16,6 @@ export class RootComponent {
   constructor(private navigation: NavigationService) {
 
     SplashScreen.hide();
-    this.navigation.navigate('');
-
+    // this.navigation.navigate('');
   }
 }
