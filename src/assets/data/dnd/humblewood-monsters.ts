@@ -2,24 +2,24 @@ export const humblewoodMonsters = [
   {
     name: 'Vulpin Captain',
     code: 'vulpin-captain',
-    maxHPs: 27,
-    currentHPs: 27,
+    maxHPs: 65,
+    currentHPs: 65,
     tempHPs: 0,
     isPC: false,
-    ac: '14',
+    ac: '15',
     mosnterType: null,
-    initiativeMod: 2
+    initiativeMod: 3
   },
   {
     name: 'Mapach Bandit',
     code: 'mapach-bandit',
-    maxHPs: 9,
-    currentHPs: 9,
+    maxHPs: 11,
+    currentHPs: 11,
     tempHPs: 0,
     isPC: false,
     ac: '12',
     mosnterType: null,
-    initiativeMod: 0
+    initiativeMod: 1
   },
   {
     name: 'Mapach Thug',
@@ -42,5 +42,137 @@ export const humblewoodMonsters = [
     ac: '15',
     mosnterType: null,
     initiativeMod: 3
+  },
+  {
+    name: 'Jerbeen Thief',
+    code: 'jerbeen-thief',
+    maxHPs: 26,
+    currentHPs: 26,
+    tempHPs: 0,
+    isPC: false,
+    ac: '13',
+    mosnterType: null,
+    initiativeMod: 2
+  },
+  {
+    name: 'Sticky Slime',
+    code: 'sticky-slime',
+    maxHPs: 13,
+    currentHPs: 13,
+    tempHPs: 0,
+    isPC: false,
+    ac: '6',
+    mosnterType: null,
+    initiativeMod: -4
+  },
+  {
+    name: 'Cursed Slime',
+    code: 'cursed-slime',
+    maxHPs: 30,
+    currentHPs: 30,
+    tempHPs: 0,
+    isPC: false,
+    ac: '8',
+    mosnterType: null,
+    initiativeMod: -2
+  },
+  {
+    name: 'Animated Slime',
+    code: 'animated-slime',
+    maxHPs: 58,
+    currentHPs: 58,
+    tempHPs: 0,
+    isPC: false,
+    ac: '12',
+    mosnterType: null,
+    initiativeMod: 1
+  },
+  {
+    name: 'Shifting Slime',
+    code: 'shifting-slime',
+    maxHPs: 120,
+    currentHPs: 120,
+    tempHPs: 0,
+    isPC: false,
+    ac: '9',
+    mosnterType: null,
+    initiativeMod: -1
+  },
+  {
+    name: 'Caustic Slime',
+    code: 'caustic-slime',
+    maxHPs: 22,
+    currentHPs: 22,
+    tempHPs: 0,
+    isPC: false,
+    ac: '8',
+    mosnterType: null,
+    initiativeMod: -2
+  },
+  {
+    name: 'Cackler',
+    code: 'cackler',
+    maxHPs: 10,
+    currentHPs: 10,
+    tempHPs: 0,
+    isPC: false,
+    ac: '15',
+    mosnterType: null,
+    initiativeMod: 3
+  },
+  {
+    name: 'Birdfolk Skeleton',
+    code: 'birdfolk-skeleton',
+    maxHPs: 13,
+    currentHPs: 13,
+    tempHPs: 0,
+    isPC: false,
+    ac: '12',
+    mosnterType: null,
+    initiativeMod: 2
+  },
+  {
+    name: 'Swarm of Insects',
+    code: 'swarm-of-insects',
+    maxHPs: 22,
+    currentHPs: 22,
+    tempHPs: 0,
+    isPC: false,
+    ac: '12',
+    mosnterType: null,
+    initiativeMod: 1
+  },
+  {
+    name: 'Giant Mokk Toad',
+    code: 'giant-mokk-toad',
+    maxHPs: 52,
+    currentHPs: 52,
+    tempHPs: 0,
+    isPC: false,
+    ac: '14',
+    mosnterType: null,
+    initiativeMod: 1
+  },
+  {
+    name: 'Swarm of Emberbats',
+    code: 'swarm-of-emberbats',
+    maxHPs: 22,
+    currentHPs: 22,
+    tempHPs: 0,
+    isPC: false,
+    ac: '12',
+    mosnterType: null,
+    initiativeMod: 2
+  },
+  {
+    name: 'Susan of the Swamp',
+    code: 'susan',
+    maxHPs: 21,
+    currentHPs: 21,
+    tempHPs: 0,
+    isPC: false,
+    ac: '14',
+    mosnterType: null,
+    initiativeMod: 0
   },
 ]

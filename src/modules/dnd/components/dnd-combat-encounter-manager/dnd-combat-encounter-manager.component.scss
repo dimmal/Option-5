@@ -7,6 +7,7 @@
   display: flex;
   gap: 2em;
   flex-direction: column;
+  font-size: .9em;
 
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
@@ -51,16 +52,16 @@
     overflow: auto;
     display: flex;
     flex-direction: column;
-    transform: translate(-50%);
     transition: .35s;
     grid-gap: 0.35em;
     gap: 0.35em;
     margin: auto;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
+    transform: translate(-50%, 100%);
 
     &.show-logs {
-      transform: translate(-50%, 100%);
+      transform: translate(-50%);
     }
 
     .log {
@@ -208,7 +209,14 @@
           background-color: rgba(0,0,0,0.35) !important;
         }
         &.is-blooded {
-          background-color: rgba(256, 0, 0, .25);
+          background-color: rgba(256, 0, 0, .2);
+
+          .current-hp-meter {
+            background-color: red !important;
+          }
+        }
+        &:not(.is-blooded) {
+          background-color: rgba(0, 256, 0, .2);
         }
 
         .current-hp-meter {
@@ -252,6 +260,24 @@
           color: white;
         }
       }
+
+      &.current-turn::after {
+        content: "forward";
+        width: fit-content;
+        height: fit-content;
+        font-family: 'Material Icons';
+        font-size: 4em;
+        position: absolute;
+        color: rgba(0,0,0,0.25);
+        left: 50%;
+        transform: translate(-50%, 100%) rotate(-90deg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: bounce;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+      }
     }
   }
 
@@ -261,6 +287,24 @@
 
     .monsters-wrapper {
       align-items: end;
+    }
+
+    .combat-actions-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10em;
+      gap: 1em;
+
+      .initiative-actions {
+        display: flex;
+        gap: 1em;
+      }
+
+      button {
+        width: 9em;
+        height: 6em;
+      }
     }
 
     .characters-wrapper,
@@ -317,6 +361,7 @@
           gap: .5em;
           width: 100%;
           min-width: 10em;
+          justify-content: center;
 
           .name,
           .init {
@@ -345,7 +390,14 @@
               background-color: rgba(0,0,0,0.35) !important;
             }
             &.is-blooded {
-              background-color: rgba(256, 0, 0, .25);
+              background-color: rgba(256, 0, 0, .2);
+
+              .current-hp-meter {
+                background-color: red !important;
+              }
+            }
+            &:not(.is-blooded) {
+              background-color: rgba(0, 256, 0, .2);
             }
 
             .current-hp-meter {
@@ -433,4 +485,10 @@
 	.page-wrapper {
 
 	}
+}
+
+@keyframes bounce {
+  0% { bottom: 0.25em }
+  50% { bottom: -0.25em; }
+  100% { bottom: 0.25em; }
 }

@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { humblewoodMonsters } from 'src/assets/data/dnd/humblewood-monsters';
 import { playerCharacterEntities } from 'src/assets/data/dnd/players';
 import { StatblockImageComponent } from '../statblock-image/statblock-image.component';
+import { LocalstorageService } from '../../services/localstorage.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'o5-dnd-combat-encounter-manager',
@@ -16,17 +19,41 @@ export class DndCombatEncounterManagerComponent {
   combatLog: Array<string> = [];
   showLogs = false;
   humblewoodMonsters = [...humblewoodMonsters];
+  playerView = false;
+  duplicateMonsterColor = ['red', 'blue', 'green', 'orange', 'purple', 'teal'];
+  currentTurnIndex = 0;
 
   COMBAT_MANAGER_KEY = 'option5-combat-manager';
+  onDestroy$ = new Subject<void>();
+  stopListeningToStorage$ = new Subject<void>();
 
-  constructor(private dialog: MatDialog) {
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    switch (event.key) {
+      case ('ArrowLeft'):
+        this.previousTurn();
+        break;
+      case ('ArrowRight'):
+        this.nextTurn();
+        break;
+    }
+  }
+
+  constructor(
+    private dialog: MatDialog,
+    private localstorageService: LocalstorageService) {
     this.initialize();
   }
 
-  initialize() {
-    const stash = localStorage.getItem(this.COMBAT_MANAGER_KEY);
+  ngOnDestroy() {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
 
-    if(!!stash) {
+  initialize() {
+    const stash = this.localstorageService.getItem(this.COMBAT_MANAGER_KEY);
+
+    if (!!stash) {
       const parsedStash: CombatManagerStashed = JSON.parse(stash);
       this.monsters = parsedStash.monsters;
       this.playerCharacters = parsedStash.playerCharacters;
@@ -58,6 +85,10 @@ export class DndCombatEncounterManagerComponent {
   removeMonster(index: number) {
     const monster = this.monsters[index];
 
+    if (monster.hasCurrentTurn) {
+      this.nextTurn();
+    }
+
     if (monster.currentHPs > 0) {
       const remove = confirm('This monster is not dead yet. Remove?');
       if (!remove) { return; }
@@ -88,7 +119,7 @@ export class DndCombatEncounterManagerComponent {
     } else if (newValue[0] === '-') {
       diff = parseInt(newValue.replace('-', ''));
       let tempHps = Number(entity.tempHPs) || 0;
-      let damageToTempHp: number = diff > tempHps? tempHps: diff;
+      let damageToTempHp: number = diff > tempHps ? tempHps : diff;
       let newCurrentTempHp: number = tempHps - damageToTempHp;
 
       newCurrent = Number(entity.currentHPs) - Number(diff) + Number(damageToTempHp);
@@ -134,7 +165,7 @@ export class DndCombatEncounterManagerComponent {
 
     if (!complete) { return; }
 
-    localStorage.removeItem(this.COMBAT_MANAGER_KEY);
+    this.localstorageService.removeItem(this.COMBAT_MANAGER_KEY);
     this.initialize();
   }
 
@@ -154,7 +185,7 @@ export class DndCombatEncounterManagerComponent {
       combatLog: this.combatLog || []
     }
 
-    localStorage.setItem(this.COMBAT_MANAGER_KEY, JSON.stringify(stash));
+    this.localstorageService.setItem(this.COMBAT_MANAGER_KEY, JSON.stringify(stash));
   }
 
   onFocus(event) {
@@ -163,9 +194,12 @@ export class DndCombatEncounterManagerComponent {
 
   monsterSelected(event, entity: CombatEntity, index: number) {
     const monster: CombatEntity = this.humblewoodMonsters.find(mon => mon.code === event.value);
+    const multipleCopies = this.monsters.filter(mon => mon.monsterType === monster.code);
+    const monsterName = `${monster.name}${(multipleCopies.length > 1) ? ` ${this.duplicateMonsterColor[multipleCopies.length - 2]}` : ''}`;
+
     const rolledInitiative = Math.floor(Math.random() * 20) + 1;
 
-    entity.name = `${monster.name} ${index + 1}`;
+    entity.name = monsterName;
     entity.maxHPs = monster.maxHPs;
     entity.currentHPs = monster.currentHPs;
     entity.ac = monster.ac;
@@ -182,6 +216,65 @@ export class DndCombatEncounterManagerComponent {
     this.dialog.open(StatblockImageComponent, {
       data: entity.monsterType
     });
+  }
+
+  togglePlayerView() {
+    this.playerView = !this.playerView;
+
+    if (this.playerView) {
+
+      this.localstorageService.changed$.pipe(takeUntil(this.onDestroy$), takeUntil(this.stopListeningToStorage$)).subscribe(() => {
+        this.initialize();
+      })
+    } else {
+      this.stopListeningToStorage$.next();
+    }
+  }
+
+  duplicate(entity: CombatEntity) {
+    const duplicate = {...entity};
+    const multipleCopies = this.monsters.filter(mon => mon.monsterType === duplicate.monsterType);
+    const monsterName = `${duplicate.name} ${this.duplicateMonsterColor[multipleCopies.length - 1]}`;
+
+    duplicate.name = monsterName;
+    duplicate. initiative = Math.floor(Math.random() * 20) + 1;
+    this.monsters.push(duplicate);
+    this.update();
+  }
+
+  nextTurn() {
+    const currentTurnIndex = this.initiativeOrder.findIndex(ce => ce.hasCurrentTurn);
+
+    if(currentTurnIndex >= 0) {
+      this.initiativeOrder[currentTurnIndex].hasCurrentTurn = false;
+    } else {
+      this.initiativeOrder[0].hasCurrentTurn = true;
+      return;
+    }
+
+    if(currentTurnIndex >= this.initiativeOrder.length -1) {
+      this.initiativeOrder[0].hasCurrentTurn = true;
+    } else {
+      this.initiativeOrder[currentTurnIndex + 1].hasCurrentTurn = true;
+    }
+  }
+
+  previousTurn() {
+    const currentTurnIndex = this.initiativeOrder.findIndex(ce => ce.hasCurrentTurn);
+
+    if(currentTurnIndex >= 0) {
+      this.initiativeOrder[currentTurnIndex].hasCurrentTurn = false;
+    } else {
+      this.initiativeOrder[0].hasCurrentTurn = true;
+      return;
+    }
+
+    if(currentTurnIndex <= 0) {
+      this.initiativeOrder[this.initiativeOrder.length - 1].hasCurrentTurn = true;
+    } else {
+      this.initiativeOrder[currentTurnIndex - 1].hasCurrentTurn = true;
+      return;
+    }
   }
 }
 
@@ -204,4 +297,5 @@ export interface CombatEntity {
   passiveInvestigation?: number;
   monsterType?: string;
   initiativeMod?: number;
+  hasCurrentTurn?: boolean;
 }

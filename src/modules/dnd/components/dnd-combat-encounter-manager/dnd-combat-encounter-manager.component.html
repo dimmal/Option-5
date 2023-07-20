@@ -2,16 +2,24 @@
   <div class="actions-wrapper">
     <button mat-icon-button (click)="addMonster()"><mat-icon>add</mat-icon></button>
     <button mat-icon-button (click)="toggleLogs()"><mat-icon>list</mat-icon></button>
+    <button mat-icon-button (click)="togglePlayerView()"><mat-icon>visibility</mat-icon></button>
     <button mat-icon-button (click)="completeCombat()"><mat-icon>close</mat-icon></button>
     <button mat-icon-button (click)="restTheParty()"><mat-icon>replay</mat-icon></button>
   </div>
   <div class="initiative-wrapper">
-    <div class="initiative mat-elevation-z8" *ngFor="let init of initiativeOrder" [ngClass]="{'is-pc': init.isPC, 'is-dead': init.currentHPs <= 0}">
+    <div class="initiative mat-elevation-z8" *ngFor="let init of initiativeOrder; let i = index" [ngClass]="{'is-pc': init.isPC, 'is-dead': init.currentHPs <= 0, 'current-turn': init.hasCurrentTurn}">
 
-      <div class="hp-meter mat-elevation-z8" [ngClass]="{'is-blooded': (init.currentHPs / init.maxHPs) <= 0.5, 'is-dead': init.currentHPs <= 0}">
-        <div class="current-hp-meter" [ngStyle]="{'width': (init.currentHPs / init.maxHPs) * 100 + '%'}"></div>
-        <div class="temp-hp-meter" [ngStyle]="{'width': (init.tempHPs / init.maxHPs) * 100 + '%'}"></div>
-      </div>
+      <ng-container *ngIf="!playerView">
+        <div class="hp-meter mat-elevation-z8" [ngClass]="{'is-blooded': (init.currentHPs / init.maxHPs) <= 0.5, 'is-dead': init.currentHPs <= 0}">
+          <div class="current-hp-meter" [ngStyle]="{'width': (init.currentHPs / init.maxHPs) * 100 + '%'}"></div>
+          <div class="temp-hp-meter" [ngStyle]="{'width': (init.tempHPs / init.maxHPs) * 100 + '%'}"></div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="playerView">
+        <div class="hp-meter mat-elevation-z8" [ngClass]="{'is-blooded': (init.currentHPs / init.maxHPs) <= 0.5, 'is-dead': init.currentHPs <= 0}">
+          <div class="current-hp-meter" [ngStyle]="{'width': '100%'}"></div>
+        </div>
+      </ng-container>
 
       <span class="name">{{init.name || init.defaultName}}</span>
       <div class="image">
@@ -31,7 +39,7 @@
         <div><mat-icon class="icon-perc">hearing</mat-icon>{{init.passivePerception}}</div>
         <div><mat-icon class="icon-inv">visibility</mat-icon>{{init.passiveInvestigation}}</div>
       </div>
-      <div class="ac">
+      <div class="ac" *ngIf="!playerView">
         <ng-container  *ngIf="!!init.ac">
           <mat-icon>shield</mat-icon>
           <span class="value">{{init.ac}}</span>
@@ -40,12 +48,19 @@
     </div>
   </div>
 
-  <div class="combat-wrapper">
+  <div class="combat-wrapper" *ngIf="!playerView">
     <div class="characters-wrapper">
 
       <ng-container *ngFor="let character of playerCharacters">
         <ng-container *ngTemplateOutlet="entity; context: { entity: character }"></ng-container>
       </ng-container>
+    </div>
+
+    <div class="combat-actions-wrapper" *ngIf="monsters?.length> 0 && !playerView">
+      <div class="initiative-actions">
+        <button mat-raised-button color="primary" (click)="previousTurn()"><mat-icon>undo</mat-icon></button>
+        <button mat-raised-button color="primary" (click)="nextTurn()"><mat-icon>redo</mat-icon></button>
+      </div>
     </div>
 
     <div class="monsters-wrapper">
@@ -129,6 +144,7 @@
           <mat-icon matSuffix class="icon-temp-hp">heart_broken</mat-icon>
         </mat-form-field>
 
+        <mat-icon *ngIf="!entity.isPC" color="primary" class="cursor-pointer" (click)="duplicate(entity)">content_copy</mat-icon>
       </div>
     </div>
   </div>

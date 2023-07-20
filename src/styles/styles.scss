@@ -8,7 +8,7 @@ body {
     margin: 0 !important;
 
 	background: $primary-background-gradient;
-} 
+}
 
 .w-100 {
     width: 100%;
@@ -18,9 +18,29 @@ body {
     height: 100%;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .page-wrapper {
     padding: 18px 16px;
     box-sizing: border-box;
     width: 100%;
     min-height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cacaca;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #cacaca;
 }
