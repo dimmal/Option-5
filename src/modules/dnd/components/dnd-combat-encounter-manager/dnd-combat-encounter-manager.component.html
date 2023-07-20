@@ -73,8 +73,8 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div class="saved-encounter" *ngFor="let stashed of stashedEncounters; let i = index" (click)="loadEncounter(stashed)">
-            <span>{{stashed.name}}</span>
+          <div class="saved-encounter" *ngFor="let stashed of stashedEncounters; let i = index" (click)="loadEncounter(stashed)" [title]="stashed.name">
+            <span class="encounter-name">{{stashed.name}}</span>
             <mat-icon color="warn" (click)="deleteSavedEncounter($event, i)">delete</mat-icon>
           </div>
         </mat-expansion-panel>

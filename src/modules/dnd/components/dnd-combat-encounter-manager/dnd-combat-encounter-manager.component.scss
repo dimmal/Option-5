@@ -318,6 +318,13 @@
         grid-gap: 1em;
         cursor: pointer;
         margin: 0.5em 0;
+
+        .encounter-name {
+          max-width: 12em;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
       }
 
       .mat-accordion {
