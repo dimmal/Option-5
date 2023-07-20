@@ -4,8 +4,9 @@ import { humblewoodMonsters } from 'src/assets/data/dnd/humblewood-monsters';
 import { playerCharacterEntities } from 'src/assets/data/dnd/players';
 import { StatblockImageComponent } from '../statblock-image/statblock-image.component';
 import { LocalstorageService } from '../../services/localstorage.service';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { SaveEncounterDialogComponent } from '../save-encounter-dialog/save-encounter-dialog.component';
 
 @Component({
   selector: 'o5-dnd-combat-encounter-manager',
@@ -16,6 +17,7 @@ export class DndCombatEncounterManagerComponent {
   playerCharacters: Array<CombatEntity> = [];
   monsters: Array<CombatEntity> = [];
   initiativeOrder: Array<CombatEntity> = [];
+  stashedEncounters: Array<CombatManagerStashed> = [];
   combatLog: Array<string> = [];
   showLogs = false;
   humblewoodMonsters = [...humblewoodMonsters];
@@ -24,8 +26,8 @@ export class DndCombatEncounterManagerComponent {
   currentTurnIndex = 0;
 
   COMBAT_MANAGER_KEY = 'option5-combat-manager';
+  STASHED_ENCOUNTERS_KEY = 'option5-combat-manager-stashed';
   onDestroy$ = new Subject<void>();
-  stopListeningToStorage$ = new Subject<void>();
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -43,6 +45,7 @@ export class DndCombatEncounterManagerComponent {
     private dialog: MatDialog,
     private localstorageService: LocalstorageService) {
     this.initialize();
+    this.listenToLocalStorageChanges();
   }
 
   ngOnDestroy() {
@@ -50,8 +53,16 @@ export class DndCombatEncounterManagerComponent {
     this.onDestroy$.complete();
   }
 
+  listenToLocalStorageChanges() {
+    this.localstorageService.changed$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+      this.initialize();
+    })
+  }
+
   initialize() {
     const stash = this.localstorageService.getItem(this.COMBAT_MANAGER_KEY);
+
+    this.stashedEncounters = JSON.parse(this.localstorageService.getItem(this.STASHED_ENCOUNTERS_KEY) || '[]');
 
     if (!!stash) {
       const parsedStash: CombatManagerStashed = JSON.parse(stash);
@@ -178,11 +189,18 @@ export class DndCombatEncounterManagerComponent {
     this.updateInitiativeTracker();
   }
 
-  updateStashed() {
+  updateStashed(encounterName?: string) {
     const stash: CombatManagerStashed = {
       monsters: this.monsters || [],
       playerCharacters: this.playerCharacters,
       combatLog: this.combatLog || []
+    }
+
+    if (encounterName) {
+      const stashedEncounters: Array<CombatManagerStashed> = JSON.parse(this.localstorageService.getItem(this.STASHED_ENCOUNTERS_KEY) || '[]');
+      stashedEncounters.push({ ...stash, name: encounterName });
+      this.stashedEncounters = stashedEncounters;
+      this.localstorageService.setItem(this.STASHED_ENCOUNTERS_KEY, JSON.stringify(stashedEncounters));
     }
 
     this.localstorageService.setItem(this.COMBAT_MANAGER_KEY, JSON.stringify(stash));
@@ -220,24 +238,16 @@ export class DndCombatEncounterManagerComponent {
 
   togglePlayerView() {
     this.playerView = !this.playerView;
-
-    if (this.playerView) {
-
-      this.localstorageService.changed$.pipe(takeUntil(this.onDestroy$), takeUntil(this.stopListeningToStorage$)).subscribe(() => {
-        this.initialize();
-      })
-    } else {
-      this.stopListeningToStorage$.next();
-    }
   }
 
   duplicate(entity: CombatEntity) {
-    const duplicate = {...entity};
+    const duplicate = { ...entity };
     const multipleCopies = this.monsters.filter(mon => mon.monsterType === duplicate.monsterType);
     const monsterName = `${duplicate.name} ${this.duplicateMonsterColor[multipleCopies.length - 1]}`;
 
     duplicate.name = monsterName;
-    duplicate. initiative = Math.floor(Math.random() * 20) + 1;
+    duplicate.hasCurrentTurn = false;
+    duplicate.initiative = Math.floor(Math.random() * 20) + 1;
     this.monsters.push(duplicate);
     this.update();
   }
@@ -245,40 +255,85 @@ export class DndCombatEncounterManagerComponent {
   nextTurn() {
     const currentTurnIndex = this.initiativeOrder.findIndex(ce => ce.hasCurrentTurn);
 
-    if(currentTurnIndex >= 0) {
+    if (currentTurnIndex >= 0) {
       this.initiativeOrder[currentTurnIndex].hasCurrentTurn = false;
     } else {
       this.initiativeOrder[0].hasCurrentTurn = true;
+      this.update();
       return;
     }
 
-    if(currentTurnIndex >= this.initiativeOrder.length -1) {
+    if (currentTurnIndex >= this.initiativeOrder.length - 1) {
       this.initiativeOrder[0].hasCurrentTurn = true;
     } else {
       this.initiativeOrder[currentTurnIndex + 1].hasCurrentTurn = true;
     }
+    this.update();
   }
 
   previousTurn() {
     const currentTurnIndex = this.initiativeOrder.findIndex(ce => ce.hasCurrentTurn);
 
-    if(currentTurnIndex >= 0) {
+    if (currentTurnIndex >= 0) {
       this.initiativeOrder[currentTurnIndex].hasCurrentTurn = false;
     } else {
       this.initiativeOrder[0].hasCurrentTurn = true;
+      this.update();
       return;
     }
 
-    if(currentTurnIndex <= 0) {
+    if (currentTurnIndex <= 0) {
       this.initiativeOrder[this.initiativeOrder.length - 1].hasCurrentTurn = true;
     } else {
       this.initiativeOrder[currentTurnIndex - 1].hasCurrentTurn = true;
-      return;
     }
+    this.update();
+  }
+
+  resetInitiative() {
+    this.initiativeOrder.forEach(ce => ce.hasCurrentTurn = false);
+    this.initiativeOrder[0].hasCurrentTurn = true;
+    this.update();
+  }
+
+  openSaveEncounterDialog() {
+    this.dialog.open(SaveEncounterDialogComponent).afterClosed().pipe(take(1)).subscribe(name => {
+      if (!!name) {
+        this.saveEncounter(name);
+      }
+    })
+  }
+
+  saveEncounter(name: string) {
+    this.updateStashed(name);
+    this.updateInitiativeTracker();
+  }
+
+  loadEncounter(encounter: CombatManagerStashed) {
+    this.monsters = encounter.monsters;
+    this.playerCharacters = encounter.playerCharacters;
+    this.combatLog = encounter.combatLog;
+
+    this.update();
+  }
+
+  deleteSavedEncounter(event: MouseEvent, index: number) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    const stashedEncounters: Array<CombatManagerStashed> = JSON.parse(this.localstorageService.getItem(this.STASHED_ENCOUNTERS_KEY) || '[]');
+    stashedEncounters.splice(index, 1);
+    this.stashedEncounters = stashedEncounters;
+    this.localstorageService.setItem(this.STASHED_ENCOUNTERS_KEY, JSON.stringify(stashedEncounters));
+  }
+
+  trackInit(index, item) {
+    return item.code;
   }
 }
 
 interface CombatManagerStashed {
+  name?: string;
   monsters: Array<CombatEntity>;
   playerCharacters: Array<CombatEntity>;
   combatLog: Array<string>;
@@ -298,4 +353,5 @@ export interface CombatEntity {
   monsterType?: string;
   initiativeMod?: number;
   hasCurrentTurn?: boolean;
+  notes?: string;
 }

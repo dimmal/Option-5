@@ -10,6 +10,7 @@ import { DndDashboardComponent } from './components/dnd-dashboard/dnd-dashboard.
 import { DndConditionsComponent } from './components/dnd-conditions/dnd-conditions.component';
 import { DndCombatEncounterManagerComponent } from './components/dnd-combat-encounter-manager/dnd-combat-encounter-manager.component';
 import { StatblockImageComponent } from './components/statblock-image/statblock-image.component';
+import { SaveEncounterDialogComponent } from './components/save-encounter-dialog/save-encounter-dialog.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { StatblockImageComponent } from './components/statblock-image/statblock-
     DndConditionsComponent,
     DndCombatEncounterManagerComponent,
     StatblockImageComponent,
+    SaveEncounterDialogComponent
   ]
 })
 export class DndModule { }

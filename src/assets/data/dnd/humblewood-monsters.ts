@@ -175,4 +175,37 @@ export const humblewoodMonsters = [
     mosnterType: null,
     initiativeMod: 0
   },
+  {
+    name: 'Cervan Fighter',
+    code: 'cervan-fighter',
+    maxHPs: 67,
+    currentHPs: 67,
+    tempHPs: 0,
+    isPC: false,
+    ac: '16',
+    mosnterType: null,
+    initiativeMod: 1
+  },
+  {
+    name: 'Bennan Seridan',
+    code: 'bennan-seridan',
+    maxHPs: 67,
+    currentHPs: 67,
+    tempHPs: 0,
+    isPC: false,
+    ac: '18',
+    mosnterType: null,
+    initiativeMod: 1
+  },
+  {
+    name: 'Wolf',
+    code: 'wolf',
+    maxHPs: 11,
+    currentHPs: 11,
+    tempHPs: 0,
+    isPC: false,
+    ac: '13',
+    mosnterType: null,
+    initiativeMod: 2
+  },
 ]

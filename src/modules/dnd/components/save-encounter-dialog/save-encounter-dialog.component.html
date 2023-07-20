@@ -1,0 +1,14 @@
+<form [formGroup]="form">
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input #input type="text" matInput formControlName="name" placeholder="Encounter name">
+      <mat-error *ngIf="form.get('name').errors?.required">This field is mandatory</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button class="confirm-btn" mat-raised-button color="primary" [disabled]="form.invalid"
+      (click)="submit()">Submit</button>
+  </div>
+
+</form>

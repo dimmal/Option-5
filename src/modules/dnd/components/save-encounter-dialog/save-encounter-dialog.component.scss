@@ -1,0 +1,14 @@
+
+.mat-dialog-actions {
+    float: right;
+}
+
+:host {
+  ::ng-deep .mat-form-field {
+    width: 25em;
+
+    .mat-form-field-flex {
+      background-color: transparent !important;
+    }
+  }
+}

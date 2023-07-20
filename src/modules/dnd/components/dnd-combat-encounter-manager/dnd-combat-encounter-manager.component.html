@@ -7,7 +7,7 @@
     <button mat-icon-button (click)="restTheParty()"><mat-icon>replay</mat-icon></button>
   </div>
   <div class="initiative-wrapper">
-    <div class="initiative mat-elevation-z8" *ngFor="let init of initiativeOrder; let i = index" [ngClass]="{'is-pc': init.isPC, 'is-dead': init.currentHPs <= 0, 'current-turn': init.hasCurrentTurn}">
+    <div class="initiative mat-elevation-z8" *ngFor="let init of initiativeOrder; let i = index; trackBy:trackInit" [ngClass]="{'is-pc': init.isPC, 'is-dead': init.currentHPs <= 0, 'current-turn': init.hasCurrentTurn}">
 
       <ng-container *ngIf="!playerView">
         <div class="hp-meter mat-elevation-z8" [ngClass]="{'is-blooded': (init.currentHPs / init.maxHPs) <= 0.5, 'is-dead': init.currentHPs <= 0}">
@@ -51,20 +51,38 @@
   <div class="combat-wrapper" *ngIf="!playerView">
     <div class="characters-wrapper">
 
-      <ng-container *ngFor="let character of playerCharacters">
+      <ng-container *ngFor="let character of playerCharacters; trackBy:trackInit">
         <ng-container *ngTemplateOutlet="entity; context: { entity: character }"></ng-container>
       </ng-container>
     </div>
 
-    <div class="combat-actions-wrapper" *ngIf="monsters?.length> 0 && !playerView">
+    <div class="combat-actions-wrapper" *ngIf="!playerView">
       <div class="initiative-actions">
-        <button mat-raised-button color="primary" (click)="previousTurn()"><mat-icon>undo</mat-icon></button>
-        <button mat-raised-button color="primary" (click)="nextTurn()"><mat-icon>redo</mat-icon></button>
+        <button mat-raised-button (click)="previousTurn()"><mat-icon>undo</mat-icon></button>
+        <button mat-raised-button (click)="resetInitiative()"><mat-icon>restart_alt</mat-icon></button>
+        <button mat-raised-button (click)="nextTurn()"><mat-icon>redo</mat-icon></button>
       </div>
+
+      <button mat-raised-button (click)="openSaveEncounterDialog()"><mat-icon>save</mat-icon></button>
+
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Saved encounters ({{stashedEncounters?.length || 0}})
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="saved-encounter" *ngFor="let stashed of stashedEncounters; let i = index" (click)="loadEncounter(stashed)">
+            <span>{{stashed.name}}</span>
+            <mat-icon color="warn" (click)="deleteSavedEncounter($event, i)">delete</mat-icon>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
 
     <div class="monsters-wrapper">
-      <ng-container *ngFor="let monster of monsters; index as index">
+      <ng-container *ngFor="let monster of monsters; index as index; trackBy:trackInit">
         <ng-container *ngTemplateOutlet="entity; context: { entity: monster, index: index }"></ng-container>
       </ng-container>
     </div>
@@ -94,7 +112,6 @@
       <div class="name">
         <ng-container *ngIf="entity.isPC">{{entity.name}}</ng-container>
         <ng-container *ngIf="!entity.isPC">
-
 
           <mat-form-field appearance="outline">
             <input matInput [(ngModel)]="entity.name" class="input-name" (change)="update()" (focus)="onFocus($event)"/>
@@ -146,6 +163,11 @@
 
         <mat-icon *ngIf="!entity.isPC" color="primary" class="cursor-pointer" (click)="duplicate(entity)">content_copy</mat-icon>
       </div>
+    </div>
+    <div class="notes" *ngIf="!entity.isPC">
+      <mat-form-field appearance="outline">
+        <textarea matInput [(ngModel)]="entity.notes" class="input-notes" (change)="update()" (focus)="onFocus($event)"></textarea>
+      </mat-form-field>
     </div>
   </div>
 </ng-template>

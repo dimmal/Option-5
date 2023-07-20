@@ -88,6 +88,7 @@
     display: flex;
     justify-content: center;
     gap: 1em;
+    margin: 0 3em;
 
     .initiative {
       display: grid;
@@ -299,11 +300,29 @@
       .initiative-actions {
         display: flex;
         gap: 1em;
+
+        button {
+          width: 6em;
+          height: 6em;
+        }
       }
 
       button {
-        width: 9em;
+        width: 20em;
         height: 6em;
+      }
+
+      .saved-encounter {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-gap: 1em;
+        cursor: pointer;
+        margin: 0.5em 0;
+      }
+
+      .mat-accordion {
+        width: 100%;
+
       }
     }
 
@@ -312,6 +331,7 @@
       display: flex;
       flex-direction: column;
       gap: 1em;
+      min-width: 35em;
 
       .character {
         border: 2px solid blue;
@@ -321,8 +341,9 @@
       }
       .character,
       .monster {
-        display: flex;
-        gap: 1em;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        grid-gap: 1em;
         padding: 1em;
         border-radius: 5px;
         width: 29em;
@@ -330,6 +351,14 @@
 
         &:hover .image .icon-remove {
           display: unset !important;
+        }
+
+        .notes {
+          grid-column: 2 / 4;
+
+          .mat-form-field {
+            width: 100%;
+          }
         }
 
         .image {
